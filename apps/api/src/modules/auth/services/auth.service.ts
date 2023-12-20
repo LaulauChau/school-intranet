@@ -19,6 +19,15 @@ export class AuthService {
     return this.jwtService.sign(payload);
   }
 
+  async register(
+    name: string,
+    email: string,
+    password: string,
+    role: 'TEACHER' | 'STUDENT',
+  ): Promise<Omit<User, 'passowrd'>> {
+    return this.usersService.create({ name, email, password, role });
+  }
+
   async validateToken(token: string): Promise<Omit<User, 'password'>> {
     const { sub } = this.jwtService.decode(token) as { username: string; sub: string };
 
